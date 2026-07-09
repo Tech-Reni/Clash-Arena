@@ -1,0 +1,15 @@
+{
+  "name": "code-clash-arena",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A modular browser-based multiplayer fighting game built with vanilla JavaScript, Canvas, and Socket.IO.",
+  "scripts": {
+    "dev": "node server/app.js",
+    "start": "node server/app.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "socket.io": "^4.1.1"
+  }
+}

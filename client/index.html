@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stickman Battle: Arena</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand">STICKMAN CLASH</div>
+        <div class="topbar-actions">
+          <button id="mute-button" class="mute-button">Mute</button>
+          <div class="status-pill" id="status-pill">Awaiting...</div>
+        </div>
+      </header>
+
+      <main class="game-shell">
+        <section class="panel menu-panel" id="menu-panel">
+          <h1>Skeletal Joint Duels</h1>
+          <p>A real-time multiplayer stickman physics replica. Jump across elevated stone platforms and strike with punches and high kicks.</p>
+          <div class="controls">
+            <input id="player-name" maxlength="16" value="Stickman" />
+            <button id="create-room">Create Arena</button>
+            <button id="create-ai-room" style="background-color: #ff9900; color: #000;">Vs Berserker</button>
+            <button id="join-room">Enter Arena</button>
+          </div>
+          <div class="controls compact">
+            <input id="room-code" maxlength="5" placeholder="ROOM CODE" />
+            <button id="copy-room">Copy Code</button>
+          </div>
+          <div class="hint">
+            <strong>Arena Controls:</strong><br/>
+            • <strong>Move:</strong> A / D or Left / Right Arrows<br/>
+            • <strong>Jump / Double-Jump:</strong> W / Spacebar<br/>
+            • <strong>Punch:</strong> F Key<br/>
+            • <strong>Kick:</strong> G Key<br/>
+            • <strong>Dash:</strong> Shift Key
+          </div>
+        </section>
+
+        <section class="panel game-panel">
+          <canvas id="game-canvas" width="960" height="540"></canvas>
+          <div class="hud">
+            <div id="room-info">Awaiting connection...</div>
+            <div class="metrics">
+              <span id="health-left">HP: 100</span>
+              <span id="timer">00:30</span>
+              <span id="health-right">HP: 100</span>
+              <button id="rematch-button" style="display: none;">Rematch</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
