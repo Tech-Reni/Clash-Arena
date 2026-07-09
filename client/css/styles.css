@@ -1,8 +1,12 @@
-/* Core Styling Rules */
+/* Core Reset Rules */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  /* Prevents default zooming/scrolling behavior */
 }
 
 body {
@@ -11,22 +15,35 @@ body {
   font-family: 'Courier New', Courier, monospace;
   overflow: hidden;
   height: 100vh;
-  display: flex;
+  width: 100vw;
 }
 
 #app {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-/* Head Navigation Row */
-.topbar {
+/* Screen States Wrapper */
+.view-screen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.view-screen.hidden {
+  display: none !important;
+}
+
+/* --- SCREEN 1: LOBBY HUB PANEL --- */
+.lobby-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 28px;
+  padding: 16px 32px;
   background-color: #0c111a;
   border-bottom: 3px solid #ff3366;
 }
@@ -39,18 +56,11 @@ body {
   letter-spacing: 2px;
 }
 
-.topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
 .mute-button {
   background-color: #161b26;
   color: #8b949e;
   border: 2px solid #212631;
-  padding: 6px 14px;
-  border-radius: 0px;
+  padding: 8px 16px;
   cursor: pointer;
   font-weight: 700;
   transition: all 0.2s ease;
@@ -61,80 +71,59 @@ body {
   color: #ff3366;
 }
 
-.status-pill {
-  background-color: #14171f;
-  color: #8b949e;
-  border: 2px solid #212631;
-  padding: 6px 16px;
-  font-size: 0.8rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.status-pill.connected {
-  border-color: #00e1ff;
-  color: #00e1ff;
-  text-shadow: 0 0 5px #00e1ff;
-}
-
-/* Sidebar Columns layout */
-.game-shell {
-  display: grid;
-  grid-template-columns: 310px 1fr;
-  flex: 1;
-  background-color: #06090e;
-}
-
-.panel {
-  padding: 24px;
+.lobby-card {
+  margin: auto;
+  width: 440px;
+  max-width: 90%;
+  background-color: #0c111a;
+  border: 3px solid #1f242e;
+  padding: 32px;
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
-/* Left panel menu container */
-.menu-panel {
-  background-color: #0c111a;
-  border-right: 3px solid #1f242e;
-  gap: 16px;
-}
-
-.menu-panel h1 {
+.lobby-card h1 {
   font-size: 1.6rem;
-  font-weight: 800;
   color: #ffffff;
   border-bottom: 2px solid #1f242e;
   padding-bottom: 8px;
+  text-align: center;
 }
 
-.menu-panel p {
+.lobby-card p {
   font-size: 0.85rem;
   color: #8b949e;
   line-height: 1.4;
+  text-align: center;
 }
 
-.controls {
+.lobby-controls {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
-.controls.compact {
-  flex-direction: row;
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.controls.compact input {
-  flex: 1;
+.input-group label {
+  font-size: 0.8rem;
+  color: #8b949e;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 input {
   background-color: #161b26;
   border: 2px solid #30363d;
   color: #ffffff;
-  padding: 10px;
-  border-radius: 0px;
-  font-size: 0.9rem;
+  padding: 12px;
+  font-size: 1rem;
   outline: none;
-  font-family: inherit;
   font-weight: bold;
 }
 
@@ -142,71 +131,86 @@ input:focus {
   border-color: #ff3366;
 }
 
+.button-row {
+  display: flex;
+  gap: 12px;
+}
+
+.button-row button {
+  flex: 1;
+}
+
 button {
   background-color: #ff3366;
   color: #ffffff;
   border: none;
-  padding: 10px 16px;
-  border-radius: 0px;
-  font-size: 0.9rem;
+  padding: 12px 20px;
+  font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  font-family: inherit;
+  transition: all 0.2s ease;
 }
 
 button:hover {
   background-color: #ff5580;
-  transform: translateY(-1px);
 }
 
-#copy-room {
-  background-color: #161b26;
-  color: #00e1ff;
-  border: 2px solid #212631;
+.orange-btn {
+  background-color: #ff9900;
+  color: #000000;
 }
 
-#copy-room:hover {
-  background-color: #212631;
+.orange-btn:hover {
+  background-color: #ffb84d;
 }
 
-.hint {
-  font-size: 0.8rem;
-  color: #8b949e;
-  line-height: 1.5;
-  background-color: #14171f;
-  padding: 12px;
-  border: 1px solid #212631;
-  margin-top: auto;
-}
-
-/* Right fighting stage container */
-.game-panel {
+.compact-row {
   display: flex;
-  flex-direction: column;
+  gap: 8px;
+}
+
+.compact-row input {
+  flex: 1;
+}
+
+.hint-box {
+  background-color: #14171f;
+  border: 1px solid #212631;
+  padding: 12px;
+  font-size: 0.75rem;
+  color: #8b949e;
+  line-height: 1.4;
+}
+
+/* --- SCREEN 2: FULL-SCREEN STAGE --- */
+.canvas-container {
+  flex: 1;
+  position: relative;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
   background-color: #06090e;
 }
 
 #game-canvas {
-  background-color: #0a0d16;
-  border: 4px solid #1f242e;
-  border-radius: 0px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  width: 100vw;
+  height: 56.25vw;
+  /* Fixed 16:9 Aspect Ratio scaling natively */
   max-width: 100%;
+  max-height: calc(100vh - 60px);
+  /* Leave space for bottom stage-footer bar */
+  object-fit: contain;
+  border: 4px solid #1f242e;
 }
 
-/* Bottom status panel wrapper details */
-.hud {
-  width: 960px;
-  max-width: 100%;
+.stage-footer {
+  height: 60px;
+  background-color: #0c111a;
+  border-top: 3px solid #1f242e;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 24px;
-  background-color: #0c111a;
-  border: 2px solid #1f242e;
+  padding: 0 24px;
 }
 
 #room-info {
@@ -217,39 +221,151 @@ button:hover {
   text-transform: uppercase;
 }
 
-.metrics {
+.stage-actions {
   display: flex;
   align-items: center;
-  gap: 24px;
-  font-size: 1.1rem;
-  font-weight: bold;
+  gap: 16px;
 }
 
-#health-left {
-  color: #00e1ff;
-}
-
-#health-right {
-  color: #ff3366;
-}
-
-#timer {
-  font-family: monospace;
-  font-size: 1.4rem;
-  background-color: #161b26;
-  padding: 4px 14px;
+.status-pill {
+  background-color: #14171f;
+  color: #8b949e;
   border: 2px solid #212631;
-  color: #ffffff;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
-#rematch-button {
+/* --- MOBILE GAMEPAD OVERLAYS (Shadow Fight 2 Styled) --- */
+#touch-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* Make overlay container pass clicks through to canvas */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 30px 40px;
+}
+
+.touch-group {
+  pointer-events: auto;
+  /* Re-enable pointer events for individual control pads */
+  display: flex;
+  position: relative;
+}
+
+/* Left Circle pad layout */
+.movement-pad {
+  width: 160px;
+  height: 160px;
+}
+
+.circle-btn {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background-color: rgba(12, 17, 26, 0.75);
+  border: 3px solid #00e1ff;
+  color: #00e1ff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(0, 225, 255, 0.2);
+}
+
+.circle-btn:active {
+  background-color: #00e1ff;
+  color: #0c111a;
+  box-shadow: 0 0 15px #00e1ff;
+}
+
+.left-arrow {
+  left: 0;
+  top: 53px;
+}
+
+.right-arrow {
+  right: 0;
+  top: 53px;
+}
+
+.up-arrow {
+  left: 53px;
+  top: 0;
+}
+
+/* Right Curved combat pad layout */
+.action-pad {
+  width: 180px;
+  height: 180px;
+}
+
+.action-btn {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(12, 17, 26, 0.75);
+  border: 3px solid #ff3366;
+  color: #ff3366;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(255, 51, 102, 0.2);
+}
+
+.action-btn:active {
+  background-color: #ff3366;
+  color: #ffffff;
+  box-shadow: 0 0 15px #ff3366;
+}
+
+.main-btn {
+  width: 64px;
+  height: 64px;
+  font-size: 0.75rem;
+}
+
+/* Curve Positioning */
+.main-btn {
+  right: 0;
+  bottom: 10px;
+}
+
+/* Primary Punch */
+.secondary-btn {
+  right: 75px;
+  bottom: 50px;
+}
+
+/* Kick */
+.small-btn {
+  width: 46px;
+  height: 46px;
+  right: 50px;
+  bottom: 125px;
+  font-size: 0.6rem;
+  border-color: #ffe36b;
+  color: #ffe36b;
+}
+
+.small-btn:active {
   background-color: #ffe36b;
   color: #000000;
-  padding: 6px 14px;
-  font-size: 0.85rem;
-  border: none;
 }
 
-#rematch-button:hover {
-  background-color: #ffeb94;
+/* Responsive Hide for desktops */
+@media (min-width: 1025px) {
+  #touch-overlay {
+    display: none !important;
+    /* Hide game controllers on non-touch screens */
+  }
 }

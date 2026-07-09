@@ -2,57 +2,84 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Stickman Battle: Arena</title>
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
     <div id="app">
-      <header class="topbar">
-        <div class="brand">STICKMAN CLASH</div>
-        <div class="topbar-actions">
+      <!-- SCREEN 1: LOBBY HUB (Centred, Full Screen) -->
+      <div id="lobby-screen" class="view-screen">
+        <header class="lobby-header">
+          <div class="brand">STICKMAN CLASH</div>
           <button id="mute-button" class="mute-button">Mute</button>
-          <div class="status-pill" id="status-pill">Awaiting...</div>
-        </div>
-      </header>
+        </header>
 
-      <main class="game-shell">
-        <section class="panel menu-panel" id="menu-panel">
+        <main class="lobby-card">
           <h1>Skeletal Joint Duels</h1>
-          <p>A real-time multiplayer stickman physics replica. Jump across elevated stone platforms and strike with punches and high kicks.</p>
-          <div class="controls">
-            <input id="player-name" maxlength="16" value="Stickman" />
-            <button id="create-room">Create Arena</button>
-            <button id="create-ai-room" style="background-color: #ff9900; color: #000;">Vs Berserker</button>
-            <button id="join-room">Enter Arena</button>
-          </div>
-          <div class="controls compact">
-            <input id="room-code" maxlength="5" placeholder="ROOM CODE" />
-            <button id="copy-room">Copy Code</button>
-          </div>
-          <div class="hint">
-            <strong>Arena Controls:</strong><br/>
-            • <strong>Move:</strong> A / D or Left / Right Arrows<br/>
-            • <strong>Jump / Double-Jump:</strong> W / Spacebar<br/>
-            • <strong>Punch:</strong> F Key<br/>
-            • <strong>Kick:</strong> G Key<br/>
-            • <strong>Dash:</strong> Shift Key
-          </div>
-        </section>
+          <p>A real-time multiplayer stickman physics arena. Jump across elevated stone platforms and strike with punches and high kicks.</p>
+          
+          <div class="lobby-controls">
+            <div class="input-group">
+              <label for="player-name">Fighter Tag</label>
+              <input id="player-name" maxlength="16" value="LORD" />
+            </div>
+            
+            <div class="button-row">
+              <button id="create-room">Create Arena</button>
+              <button id="create-ai-room" class="orange-btn">Vs Berserker</button>
+            </div>
 
-        <section class="panel game-panel">
-          <canvas id="game-canvas" width="960" height="540"></canvas>
-          <div class="hud">
-            <div id="room-info">Awaiting connection...</div>
-            <div class="metrics">
-              <span id="health-left">HP: 100</span>
-              <span id="timer">00:30</span>
-              <span id="health-right">HP: 100</span>
-              <button id="rematch-button" style="display: none;">Rematch</button>
+            <div class="input-group join-box">
+              <label for="room-code">Enter Friend's Arena</label>
+              <div class="compact-row">
+                <input id="room-code" maxlength="5" placeholder="ROOM CODE" />
+                <button id="join-room">Enter</button>
+              </div>
             </div>
           </div>
-        </section>
-      </main>
+          <div class="hint-box">
+            <strong>Desktop Controls:</strong> A/D to Run, Space to Jump, F to Punch, G to Kick, Shift to Dash.
+          </div>
+        </main>
+      </div>
+
+      <!-- SCREEN 2: FIGHTING STAGE (Full Screen Arena) -->
+      <div id="game-screen" class="view-screen hidden">
+        <div class="canvas-container">
+          <canvas id="game-canvas" width="960" height="540"></canvas>
+
+          <!-- MOBILE HUD TOUCH BUTTONS (Shadow Fight 2 Styled) -->
+          <div id="touch-overlay">
+            <!-- Left Corner: Directional Controls -->
+            <div class="touch-group movement-pad">
+              <button id="btn-left" class="touch-btn circle-btn left-arrow">&larr;</button>
+              <button id="btn-jump" class="touch-btn circle-btn up-arrow">&uarr;</button>
+              <button id="btn-right" class="touch-btn circle-btn right-arrow">&rarr;</button>
+            </div>
+
+            <!-- Right Corner: Combat Controls -->
+            <div class="touch-group action-pad">
+              <button id="btn-dash" class="touch-btn action-btn small-btn">DASH</button>
+              <button id="btn-punch" class="touch-btn action-btn main-btn">PUNCH</button>
+              <button id="btn-kick" class="touch-btn action-btn main-btn secondary-btn">KICK</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inline Stage Footer Information -->
+        <footer class="stage-footer">
+          <div id="room-info">Awaiting rival...</div>
+          <div class="stage-actions">
+            <span id="health-left" class="hidden">HP: --</span>
+            <span id="timer" class="hidden">00</span>
+            <span id="health-right" class="hidden">HP: --</span>
+            <button id="rematch-button" style="display: none;">Rematch</button>
+            <div class="status-pill" id="status-pill">Lobby</div>
+            <button id="copy-room" class="mute-button">Copy Code</button>
+          </div>
+        </footer>
+      </div>
     </div>
 
     <script type="module" src="./js/main.js"></script>

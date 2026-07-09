@@ -48,7 +48,7 @@ function updateBloodParticles() {
     const part = bloodParticles[index];
     part.x += part.vx;
     part.y += part.vy;
-    part.vy += 0.25; 
+    part.vy += 0.25;
     part.alpha -= 0.035;
 
     ctx.save();
@@ -125,10 +125,33 @@ function triggerAudioForAction(type) {
   audioManager.playSfx(type);
 }
 
+// Helper to bind tactile mobile virtual touch triggers
+function bindTouchButton(elementId, actionProp) {
+  const btn = document.getElementById(elementId);
+  if (!btn) return;
+
+  btn.addEventListener('touchstart', (event) => {
+    event.preventDefault(); // Prevents cursor tap emulation & page scaling
+    state.inputs[actionProp] = true;
+
+    // Trigger instant client-side sfx feedback
+    if (actionProp === 'punch') triggerAudioForAction('punch');
+    if (actionProp === 'kick') triggerAudioForAction('dash');
+    if (actionProp === 'jump') triggerAudioForAction('jump');
+    if (actionProp === 'dash') triggerAudioForAction('dash');
+  }, { passive: false });
+
+  btn.addEventListener('touchend', (event) => {
+    event.preventDefault();
+    state.inputs[actionProp] = false;
+  }, { passive: false });
+}
+
 function attachInputHandlers() {
+  // 1. DESKTOP KEYBOARD INPUT BINDINGS
   window.addEventListener('keydown', (event) => {
     audioManager.ensureStarted();
-    
+
     if (event.key === 'ArrowUp' || event.key.toLowerCase() === 'w' || event.key === ' ') {
       triggerAudioForAction('jump');
       state.inputs.jump = true;
@@ -171,13 +194,21 @@ function attachInputHandlers() {
     }
   });
 
+  // 2. MOBILE GAMEPAD BUTTON BINDINGS (Shadow Fight 2 Styled Overlay)
+  bindTouchButton('btn-left', 'left');
+  bindTouchButton('btn-right', 'right');
+  bindTouchButton('btn-jump', 'jump');
+  bindTouchButton('btn-punch', 'punch');
+  bindTouchButton('btn-kick', 'kick');
+  bindTouchButton('btn-dash', 'dash');
+
+  // 3. LOBBY INTERACTIVE ELEMENT ACTIONS
   document.getElementById('create-room').addEventListener('click', () => {
     triggerAudioForAction('menu');
     const name = document.getElementById('player-name').value || 'LORD';
     client.createRoom(name);
   });
 
-  // NEW: Single-Player trigger binder
   document.getElementById('create-ai-room').addEventListener('click', () => {
     triggerAudioForAction('menu');
     const name = document.getElementById('player-name').value || 'LORD';
@@ -215,7 +246,7 @@ function attachInputHandlers() {
 function loop() {
   renderer.clear();
   renderer.drawBackground();
-  
+
   if (state.room) {
     renderer.drawArena(state.room);
     renderer.drawPowerups(state.room.powerups || []);
@@ -229,15 +260,23 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
+// Transition handlers from lobby to game stages
+function transitionToStage() {
+  document.getElementById('lobby-screen').classList.add('hidden');
+  document.getElementById('game-screen').classList.remove('hidden');
+}
+
 client.onRoomCreated = ({ code, playerId }) => {
   state.localPlayerId = playerId;
   document.getElementById('room-code').value = code;
   document.getElementById('room-info').textContent = `Match Arena Ready: ${code}`;
+  transitionToStage();
 };
 
 client.onRoomJoined = ({ room, playerId }) => {
   state.localPlayerId = playerId;
   state.room = room;
+  transitionToStage();
 };
 
 client.onStateUpdate = (room) => {
@@ -265,7 +304,7 @@ client.onStateUpdate = (room) => {
     if (player.hitstun > 0 && previousPlayer.hitstun <= 0) {
       triggerAudioForAction('hit');
       spawnBlood(player.x + 20, player.y + 40, player.facing);
-      
+
       const dmgDealt = previousPlayer.health - player.health;
       if (dmgDealt > 0) {
         spawnFloatingText(player.x + 10, player.y - 20, `-${dmgDealt} HP`, '#ff3366');
