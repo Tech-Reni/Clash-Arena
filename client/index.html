@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Stickman Battle: Arena</title>
+    <title>Clash Arena</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:ital,wght@0,400;0,700;0,900;1,700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
@@ -11,13 +14,13 @@
       <!-- SCREEN 1: LOBBY HUB (Centred, Full Screen) -->
       <div id="lobby-screen" class="view-screen">
         <header class="lobby-header">
-          <div class="brand">STICKMAN CLASH</div>
+          <div class="brand">CLASH ARENA</div>
           <button id="mute-button" class="mute-button">Mute</button>
         </header>
 
         <main class="lobby-card">
-          <h1>Skeletal Joint Duels</h1>
-          <p>A real-time multiplayer stickman physics arena. Jump across elevated stone platforms and strike with punches and high kicks.</p>
+          <h1>⚔️ ARENA DUELS ⚔️</h1>
+          <p>Real-time multiplayer combat arena. Battle across elevated platforms, strike with fierce attacks, and claim victory!</p>
           
           <div class="lobby-controls">
             <div class="input-group">
@@ -39,7 +42,10 @@
             </div>
           </div>
           <div class="hint-box">
-            <strong>Desktop Controls:</strong> A/D to Run, Space to Jump, F to Punch, G to Kick, Shift to Dash.
+            <strong>⌨️ Desktop Controls:</strong> A/D or ←/→ to Move &nbsp;|&nbsp; Space/W/↑ to Jump &nbsp;|&nbsp; F to Punch &nbsp;|&nbsp; G to Kick &nbsp;|&nbsp; Shift to Dash
+          </div>
+          <div class="hint-box secondary-hint">
+            <strong>📱 Mobile:</strong> Use the on-screen touch controls
           </div>
         </main>
       </div>
@@ -72,11 +78,11 @@
           <div id="room-info">Awaiting rival...</div>
           <div class="stage-actions">
             <span id="health-left" class="hidden">HP: --</span>
-            <span id="timer" class="hidden">00</span>
+            <span id="timer" class="hidden">--</span>
             <span id="health-right" class="hidden">HP: --</span>
-            <button id="rematch-button" style="display: none;">Rematch</button>
+            <button id="rematch-button" style="display: none;">🔄 Rematch</button>
             <div class="status-pill" id="status-pill">Lobby</div>
-            <button id="copy-room" class="mute-button">Copy Code</button>
+            <button id="copy-room" class="mute-button">📋 Copy Code</button>
           </div>
         </footer>
       </div>

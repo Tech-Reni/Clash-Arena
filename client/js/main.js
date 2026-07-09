@@ -136,7 +136,7 @@ function bindTouchButton(elementId, actionProp) {
 
     // Trigger instant client-side sfx feedback
     if (actionProp === 'punch') triggerAudioForAction('punch');
-    if (actionProp === 'kick') triggerAudioForAction('dash');
+    if (actionProp === 'kick') triggerAudioForAction('kick');
     if (actionProp === 'jump') triggerAudioForAction('jump');
     if (actionProp === 'dash') triggerAudioForAction('dash');
   }, { passive: false });
@@ -298,7 +298,7 @@ client.onStateUpdate = (room) => {
     }
 
     if (player.action === 'kick' && previousPlayer.action !== 'kick') {
-      triggerAudioForAction('dash');
+      triggerAudioForAction('kick');
     }
 
     if (player.hitstun > 0 && previousPlayer.hitstun <= 0) {

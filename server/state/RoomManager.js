@@ -101,7 +101,7 @@ class GameRoom {
     const side = this.players.length === 0 ? -1 : 1;
     const player = {
       id: createId('player'),
-      name: this.players.length === 0 ? 'LORD' : 'FROST',
+      name: playerName || (this.players.length === 0 ? 'LORD' : 'FROST'),
       socketId,
       connected: true,
       side,

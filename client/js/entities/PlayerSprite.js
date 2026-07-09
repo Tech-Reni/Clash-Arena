@@ -25,12 +25,12 @@ export class PlayerSprite {
     this.ghosts.forEach((ghost, idx) => {
       context.save();
       context.globalAlpha = ghost.alpha * (idx / this.ghosts.length);
-      this.drawStickmanStructure(context, ghost.x, ghost.y, facing, action, hitstun, dead, true);
+    this.drawFighterStructure(context, ghost.x, ghost.y, facing, action, hitstun, dead, true);
       context.restore();
     });
 
     // Draw core player
-    this.drawStickmanStructure(context, x, y, facing, action, hitstun, dead, false);
+    this.drawFighterStructure(context, x, y, facing, action, hitstun, dead, false);
 
     // Render active Rage power buff visual effect
     if (activeBuff === 'RAGE' && !dead) {
@@ -55,7 +55,7 @@ export class PlayerSprite {
     }
   }
 
-  drawStickmanStructure(context, x, y, facing, action, hitstun, dead, isGhost) {
+  drawFighterStructure(context, x, y, facing, action, hitstun, dead, isGhost) {
     context.save();
     const cx = x + 20;
     const cy = y + 50;

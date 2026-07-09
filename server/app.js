@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, '..', 'client')));
 app.use('/shared', express.static(path.join(__dirname, '..', 'shared')));
 
 app.get('/health', (_request, response) => {
-  response.json({ status: 'ok', game: 'Code Clash Arena' });
+  response.json({ status: 'ok', game: 'Clash Arena' });
 });
 
 io.on('connection', (socket) => {
@@ -108,5 +108,5 @@ setInterval(() => {
 }, 1000 / 60);
 
 server.listen(port, () => {
-  console.log(`Code Clash Arena server listening on port ${port}`);
+  console.log(`⚔️ Clash Arena server running on port ${port}`);
 });
