@@ -1,6 +1,6 @@
-# Code Clash Arena
+# Clash Arena
 
-Code Clash Arena is a polished, educational 2D multiplayer fighting game built with vanilla JavaScript, HTML Canvas, and Socket.IO. The experience is designed to feel like a premium indie fighter while remaining approachable for students learning real-time game programming.
+Clash Arena is a polished, educational 2D multiplayer fighting game built with vanilla JavaScript, HTML Canvas, and Socket.IO. The experience is designed to feel like a premium indie fighter while remaining approachable for students learning real-time game programming.
 
 ## Features
 
